@@ -1,0 +1,210 @@
+# Blender 3.4.1 MTL File: 'None'
+# www.blender.org
+
+newmtl Material.002
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd textures/компас_DefaultMaterial_BaseColor.png
+map_Ns textures/компас_DefaultMaterial_OcclusionRoughnessM.png
+
+newmtl Material.003
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd textures/компас_DefaultMaterial_BaseColor.png
+map_Ns textures/компас_DefaultMaterial_OcclusionRoughnessM.png
+
+newmtl Material.004
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd textures/компас_DefaultMaterial_BaseColor.png
+map_Ns textures/компас_DefaultMaterial_OcclusionRoughnessM.png
+
+newmtl Material.005
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd textures/компас_DefaultMaterial_BaseColor.png
+map_Ns textures/компас_DefaultMaterial_OcclusionRoughnessM.png
+
+newmtl Material.006
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd textures/компас_DefaultMaterial_BaseColor.png
+map_Ns textures/компас_DefaultMaterial_OcclusionRoughnessM.png
+
+newmtl Material.007
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd textures/компас_DefaultMaterial_BaseColor.png
+map_Ns textures/компас_DefaultMaterial_OcclusionRoughnessM.png
+
+newmtl Material_#3
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd textures/chest_01_BaseColor.png
+map_Ns textures/chest_01_Roughness.png
+map_refl textures/chest_01_Metallic.png
+map_Bump -bm 1.000000 textures/chest_01_Normal.png
+
+newmtl Material_#3.001
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd textures/chest_01_BaseColor.png
+map_Ns textures/chest_01_Roughness.png
+map_refl textures/chest_01_Metallic.png
+map_Bump -bm 1.000000 textures/chest_01_Normal.png
+
+newmtl Material__27.001
+Ns 10.000005
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd textures/Tex_0016_3.png
+
+newmtl Material__27.002
+Ns 10.000005
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd textures/Tex_0016_3.png
+
+newmtl Material__28.001
+Ns 10.000005
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd textures/Tex_0022_3.png
+
+newmtl Material__28.002
+Ns 10.000005
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd textures/Tex_0022_3.png
+
+newmtl Material__29.001
+Ns 10.000005
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd textures/Tex_0019_3.png
+
+newmtl Material__29.002
+Ns 10.000005
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd textures/Tex_0019_3.png
+
+newmtl Material__30.001
+Ns 10.000005
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd textures/Tex_0026_3.png
+
+newmtl Material__30.002
+Ns 10.000005
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd textures/Tex_0026_3.png
+
+newmtl RocksSmall
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd textures/RocksSmall.jpeg
+
+newmtl RocksSmall.001
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd textures/RocksSmall.jpeg
+
+newmtl lambert4
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd textures/boat_Albedo.png
+map_Ns textures/boat_Roughness.png
+map_refl textures/boat_Metallic.png
+map_Ke textures/boat_Emission.png
+map_Bump -bm 1.000000 textures/boat_Normal.png
+
+newmtl lambert4.001
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd textures/boat_Albedo.png
+map_Ns textures/boat_Roughness.png
+map_refl textures/boat_Metallic.png
+map_Ke textures/boat_Emission.png
+map_Bump -bm 1.000000 textures/boat_Normal.png
