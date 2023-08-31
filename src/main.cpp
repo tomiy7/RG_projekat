@@ -165,18 +165,24 @@ int main() {
 
     // load models
     // -----------
-    Model ourModel("resources/objects/backpack/backpack.obj");
-    ourModel.SetShaderTextureNamePrefix("material.");
+    Model ourModel1("resources/objects/ostrvo/ostrvo.obj");
+    ourModel1.SetShaderTextureNamePrefix("material.");
+
+    stbi_set_flip_vertically_on_load(false);
+    Model ourModel2("resources/objects/ostrvo/sveSemOstrva.obj");
+    ourModel2.SetShaderTextureNamePrefix("material.");
+    stbi_set_flip_vertically_on_load(true);
+
 
     PointLight& pointLight = programState->pointLight;
     pointLight.position = glm::vec3(4.0f, 4.0, 0.0);
-    pointLight.ambient = glm::vec3(0.1, 0.1, 0.1);
+    pointLight.ambient = glm::vec3(1.0, 1.0, 1.0);
     pointLight.diffuse = glm::vec3(0.6, 0.6, 0.6);
     pointLight.specular = glm::vec3(1.0, 1.0, 1.0);
 
     pointLight.constant = 1.0f;
-    pointLight.linear = 0.09f;
-    pointLight.quadratic = 0.032f;
+    pointLight.linear = 0.009f;
+    pointLight.quadratic = 0.00032f;
 
 
 
@@ -227,7 +233,8 @@ int main() {
                                programState->backpackPosition); // translate it down so it's at the center of the scene
         model = glm::scale(model, glm::vec3(programState->backpackScale));    // it's a bit too big for our scene, so scale it down
         ourShader.setMat4("model", model);
-        ourModel.Draw(ourShader);
+        ourModel1.Draw(ourShader);
+        ourModel2.Draw(ourShader);
 
         if (programState->ImGuiEnabled)
             DrawImGui(programState);
