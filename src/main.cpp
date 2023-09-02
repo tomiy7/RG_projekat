@@ -40,15 +40,12 @@ bool firstMouse = true;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
-struct PointLight {
-    glm::vec3 position;
+struct DirectLight {
+    glm::vec3 direction;
+
     glm::vec3 ambient;
     glm::vec3 diffuse;
     glm::vec3 specular;
-
-    float constant;
-    float linear;
-    float quadratic;
 };
 
 struct ProgramState {
@@ -56,9 +53,9 @@ struct ProgramState {
     bool ImGuiEnabled = false;
     Camera camera;
     bool CameraMouseMovementUpdateEnabled = true;
-    glm::vec3 backpackPosition = glm::vec3(0.0f);
-    float backpackScale = 1.0f;
-    PointLight pointLight;
+    glm::vec3 islandPosition = glm::vec3(0.0f);
+    float islandScale = 1.0f;
+    DirectLight directLight;
     ProgramState()
             : camera(glm::vec3(0.0f, 0.0f, 3.0f)) {}
 
@@ -175,18 +172,11 @@ int main() {
     ourModel2.SetShaderTextureNamePrefix("material.");
     stbi_set_flip_vertically_on_load(true);
 
-
-    PointLight& pointLight = programState->pointLight;
-    pointLight.position = glm::vec3(4.0f, 4.0, 0.0);
-    pointLight.ambient = glm::vec3(1.0, 1.0, 1.0);
-    pointLight.diffuse = glm::vec3(0.6, 0.6, 0.6);
-    pointLight.specular = glm::vec3(1.0, 1.0, 1.0);
-
-    pointLight.constant = 1.0f;
-    pointLight.linear = 0.009f;
-    pointLight.quadratic = 0.00032f;
-
-
+    DirectLight& directLight = programState->directLight;
+    directLight.direction = glm::vec3(0.2, -1.0, -0.1);
+    directLight.ambient = glm::vec3(0.1, 0.1, 0.1);
+    directLight.diffuse = glm::vec3(0.5, 0.5, 0.5);
+    directLight.specular = glm::vec3(0.6, 0.6, 0.6);
 
     // draw in wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -212,14 +202,10 @@ int main() {
 
         // don't forget to enable shader before setting uniforms
         ourShader.use();
-        pointLight.position = glm::vec3(4.0 * cos(currentFrame), 4.0f, 4.0 * sin(currentFrame));
-        ourShader.setVec3("pointLight.position", pointLight.position);
-        ourShader.setVec3("pointLight.ambient", pointLight.ambient);
-        ourShader.setVec3("pointLight.diffuse", pointLight.diffuse);
-        ourShader.setVec3("pointLight.specular", pointLight.specular);
-        ourShader.setFloat("pointLight.constant", pointLight.constant);
-        ourShader.setFloat("pointLight.linear", pointLight.linear);
-        ourShader.setFloat("pointLight.quadratic", pointLight.quadratic);
+        ourShader.setVec3("directLight.direction", directLight.direction);
+        ourShader.setVec3("directLight.ambient", directLight.ambient);
+        ourShader.setVec3("directLight.diffuse", directLight.diffuse);
+        ourShader.setVec3("directLight.specular", directLight.specular);
         ourShader.setVec3("viewPosition", programState->camera.Position);
         ourShader.setFloat("material.shininess", 32.0f);
         // view/projection transformations
@@ -232,8 +218,8 @@ int main() {
         // render the loaded model
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model,
-                               programState->backpackPosition); // translate it down so it's at the center of the scene
-        model = glm::scale(model, glm::vec3(programState->backpackScale));    // it's a bit too big for our scene, so scale it down
+                               programState->islandPosition); // translate it down so it's at the center of the scene
+        model = glm::scale(model, glm::vec3(programState->islandScale));    // it's a bit too big for our scene, so scale it down
         ourShader.setMat4("model", model);
         ourModel1.Draw(ourShader);
         ourModel2.Draw(ourShader);
@@ -321,12 +307,9 @@ void DrawImGui(ProgramState *programState) {
         ImGui::Text("Hello text");
         ImGui::SliderFloat("Float slider", &f, 0.0, 1.0);
         ImGui::ColorEdit3("Background color", (float *) &programState->clearColor);
-        ImGui::DragFloat3("Backpack position", (float*)&programState->backpackPosition);
-        ImGui::DragFloat("Backpack scale", &programState->backpackScale, 0.05, 0.1, 4.0);
+        ImGui::DragFloat3("Backpack position", (float*)&programState->islandPosition);
+        ImGui::DragFloat("Backpack scale", &programState->islandScale, 0.05, 0.1, 4.0);
 
-        ImGui::DragFloat("pointLight.constant", &programState->pointLight.constant, 0.05, 0.0, 1.0);
-        ImGui::DragFloat("pointLight.linear", &programState->pointLight.linear, 0.05, 0.0, 1.0);
-        ImGui::DragFloat("pointLight.quadratic", &programState->pointLight.quadratic, 0.05, 0.0, 1.0);
         ImGui::End();
     }
 
