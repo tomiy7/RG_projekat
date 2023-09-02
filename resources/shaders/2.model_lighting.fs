@@ -54,5 +54,8 @@ void main()
     vec3 normal = normalize(Normal);
     vec3 viewDir = normalize(viewPosition - FragPos);
     vec3 result = CalcPointLight(pointLight, normal, FragPos, viewDir);
+    if(vec4(texture(material.texture_diffuse1, TexCoords)).a < 0.4)
+        discard;
+
     FragColor = vec4(result, 1.0);
 }
