@@ -97,6 +97,7 @@ void ProgramState::LoadFromFile(std::string filename) {
 ProgramState *programState;
 
 void DrawImGui(ProgramState *programState);
+unsigned int loadCubeMap(vector<std::string> faces);
 
 int main() {
     // glfw: initialize and configure
@@ -148,7 +149,6 @@ int main() {
     (void) io;
 
 
-
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330 core");
 
@@ -161,9 +161,78 @@ int main() {
     // build and compile shaders
     // -------------------------
     Shader ourShader("resources/shaders/2.model_lighting.vs", "resources/shaders/2.model_lighting.fs");
+    Shader ourShaderSkyBox("resources/shaders/skybox.vs", "resources/shaders/skybox.fs");
 
     // load models
     // -----------
+
+    float skyboxVertices[] = {
+            // positions
+            -1.0f,  1.0f, -1.0f,
+            -1.0f, -1.0f, -1.0f,
+            1.0f, -1.0f, -1.0f,
+            1.0f, -1.0f, -1.0f,
+            1.0f,  1.0f, -1.0f,
+            -1.0f,  1.0f, -1.0f,
+
+            -1.0f, -1.0f,  1.0f,
+            -1.0f, -1.0f, -1.0f,
+            -1.0f,  1.0f, -1.0f,
+            -1.0f,  1.0f, -1.0f,
+            -1.0f,  1.0f,  1.0f,
+            -1.0f, -1.0f,  1.0f,
+
+            1.0f, -1.0f, -1.0f,
+            1.0f, -1.0f,  1.0f,
+            1.0f,  1.0f,  1.0f,
+            1.0f,  1.0f,  1.0f,
+            1.0f,  1.0f, -1.0f,
+            1.0f, -1.0f, -1.0f,
+
+            -1.0f, -1.0f,  1.0f,
+            -1.0f,  1.0f,  1.0f,
+            1.0f,  1.0f,  1.0f,
+            1.0f,  1.0f,  1.0f,
+            1.0f, -1.0f,  1.0f,
+            -1.0f, -1.0f,  1.0f,
+
+            -1.0f,  1.0f, -1.0f,
+            1.0f,  1.0f, -1.0f,
+            1.0f,  1.0f,  1.0f,
+            1.0f,  1.0f,  1.0f,
+            -1.0f,  1.0f,  1.0f,
+            -1.0f,  1.0f, -1.0f,
+
+            -1.0f, -1.0f, -1.0f,
+            -1.0f, -1.0f,  1.0f,
+            1.0f, -1.0f, -1.0f,
+            1.0f, -1.0f, -1.0f,
+            -1.0f, -1.0f,  1.0f,
+            1.0f, -1.0f,  1.0f
+    };
+
+    unsigned int skyboxVAO, skyboxVBO;
+    glGenVertexArrays(1, &skyboxVAO);
+    glGenBuffers(1, &skyboxVBO);
+    glBindVertexArray(skyboxVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+
+    vector<std::string> faces
+            {
+                FileSystem::getPath("resources/objects/ostrvo/textures/px.jpg"),
+                FileSystem::getPath("resources/objects/ostrvo/textures/nx.jpg"),
+                FileSystem::getPath("resources/objects/ostrvo/textures/py.jpg"),
+                FileSystem::getPath("resources/objects/ostrvo/textures/ny.jpg"),
+                FileSystem::getPath("resources/objects/ostrvo/textures/pz.jpg"),
+                FileSystem::getPath("resources/objects/ostrvo/textures/nz.jpg")
+            };
+    stbi_set_flip_vertically_on_load(false);
+    unsigned int cubemapTexture = loadCubeMap(faces);
+    stbi_set_flip_vertically_on_load(true);
+
     Model ourModel1("resources/objects/ostrvo/ostrvo.obj");
     ourModel1.SetShaderTextureNamePrefix("material.");
 
@@ -173,10 +242,13 @@ int main() {
     stbi_set_flip_vertically_on_load(true);
 
     DirectLight& directLight = programState->directLight;
-    directLight.direction = glm::vec3(0.2, -1.0, -0.1);
+    directLight.direction = glm::vec3(- 0.2, -1.0, -0.1);
     directLight.ambient = glm::vec3(0.1, 0.1, 0.1);
     directLight.diffuse = glm::vec3(0.5, 0.5, 0.5);
     directLight.specular = glm::vec3(0.6, 0.6, 0.6);
+
+    ourShaderSkyBox.use();
+    ourShaderSkyBox.setInt("skybox", 0);
 
     // draw in wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -199,6 +271,7 @@ int main() {
         // ------
         glClearColor(programState->clearColor.r, programState->clearColor.g, programState->clearColor.b, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
         // don't forget to enable shader before setting uniforms
         ourShader.use();
@@ -223,6 +296,18 @@ int main() {
         ourShader.setMat4("model", model);
         ourModel1.Draw(ourShader);
         ourModel2.Draw(ourShader);
+
+        glDepthMask(GL_FALSE);
+        glDepthFunc(GL_LEQUAL);
+        ourShaderSkyBox.use();
+        ourShaderSkyBox.setMat4("view", glm::mat4(glm::mat3(view)));
+        ourShaderSkyBox.setMat4("projection", projection);
+        glBindVertexArray(skyboxVAO);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glDepthMask(GL_TRUE);
+        glDepthFunc(GL_LESS);
 
         if (programState->ImGuiEnabled)
             DrawImGui(programState);
@@ -337,4 +422,34 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         }
     }
+}
+
+unsigned int loadCubeMap(vector<std::string> faces){
+    unsigned int textureID;
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+
+    int width, height, nrChannels;
+    unsigned char* data;
+
+    for(int i = 0; i < faces.size(); i++){
+        data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
+        if(data){
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width,
+                         height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+        }else{
+            std::cerr << "Failed to load cube map texture face" << endl;
+            return -1;
+        }
+        stbi_image_free(data);
+    }
+
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+    return textureID;
 }
