@@ -26,6 +26,6 @@ Poznati kapetan Jack Sparrow je drugi put predao svoj kompas zarad ruma, medjuti
 ## Linkovi
 - [Tropical island] `https://sketchfab.com/3d-models/tropical-island-f91862f8c38b481aa19edccac851eefb`
 - [Old wooden chest] `https://sketchfab.com/3d-models/old-wooden-chest-45f93c78e5174036801bfb535c139ac7`
-- [Jack`s compass] `https://sketchfab.com/3d-models/jack-sparrows-compass-e709b41980274adb8dacba4b1ebeb519`
+- [Jack's compass] `https://sketchfab.com/3d-models/jack-sparrows-compass-e709b41980274adb8dacba4b1ebeb519`
 - [Jack Sparrow] `https://sketchfab.com/3d-models/jack-sparrow-low-poly-674e90f4a40a4ac8a81498bfaa60b8ff`
 - [Galleon ship] `https://sketchfab.com/3d-models/galleon-35268caddd88449589d00fa0f739ab0c`
