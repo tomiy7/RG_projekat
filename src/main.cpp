@@ -35,6 +35,7 @@ const unsigned int SCR_HEIGHT = 600;
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
+bool blinn = true;
 
 // timing
 float deltaTime = 0.0f;
@@ -242,10 +243,10 @@ int main() {
     stbi_set_flip_vertically_on_load(true);
 
     DirectLight& directLight = programState->directLight;
-    directLight.direction = glm::vec3(- 0.2, -1.0, -0.1);
-    directLight.ambient = glm::vec3(0.1, 0.1, 0.1);
-    directLight.diffuse = glm::vec3(0.5, 0.5, 0.5);
-    directLight.specular = glm::vec3(0.6, 0.6, 0.6);
+    directLight.direction = glm::vec3(-0.2, -1.0, -0.1);
+    directLight.ambient = glm::vec3(0.9, 0.9, 0.9);
+    directLight.diffuse = glm::vec3(0.9, 0.9, 0.9);
+    directLight.specular = glm::vec3(0.8, 0.8, 0.8);
 
     ourShaderSkyBox.use();
     ourShaderSkyBox.setInt("skybox", 0);
@@ -392,8 +393,8 @@ void DrawImGui(ProgramState *programState) {
         ImGui::Text("Hello text");
         ImGui::SliderFloat("Float slider", &f, 0.0, 1.0);
         ImGui::ColorEdit3("Background color", (float *) &programState->clearColor);
-        ImGui::DragFloat3("Backpack position", (float*)&programState->islandPosition);
-        ImGui::DragFloat("Backpack scale", &programState->islandScale, 0.05, 0.1, 4.0);
+        ImGui::DragFloat3("Island position", (float*)&programState->islandPosition);
+        ImGui::DragFloat("Island scale", &programState->islandScale, 0.05, 0.1, 4.0);
 
         ImGui::End();
     }
