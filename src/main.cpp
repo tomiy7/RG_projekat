@@ -243,10 +243,10 @@ int main() {
     stbi_set_flip_vertically_on_load(true);
 
     DirectLight& directLight = programState->directLight;
-    directLight.direction = glm::vec3(-0.2, -1.0, -0.1);
-    directLight.ambient = glm::vec3(0.9, 0.9, 0.9);
-    directLight.diffuse = glm::vec3(0.9, 0.9, 0.9);
-    directLight.specular = glm::vec3(0.8, 0.8, 0.8);
+    directLight.direction = glm::vec3(-0.2f, -1.0f, -0.3f);
+    directLight.ambient = glm::vec3(0.3, 0.3, 0.3);
+    directLight.diffuse = glm::vec3(0.6, 0.6, 0.6);
+    directLight.specular = glm::vec3(0.7, 0.7, 0.7);
 
     ourShaderSkyBox.use();
     ourShaderSkyBox.setInt("skybox", 0);

@@ -1,5 +1,5 @@
-# project_base
-Prazan projekat sa pratećim bibliotekama koje koristimo na času. 
+# RG-Ostrvo
+
 
 # Uputstvo
 1. `git clone https://github.com/matf-racunarska-grafika/project_base.git`

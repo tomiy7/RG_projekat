@@ -12,12 +12,16 @@ struct DirectLight {
 struct Material {
     sampler2D texture_diffuse1;
     sampler2D texture_specular1;
+    sampler2D texture_normal1;
 
     float shininess;
 };
 in vec2 TexCoords;
 in vec3 Normal;
 in vec3 FragPos;
+in vec3 TangentViewPos;
+in vec3 TangentFragPos;
+in vec3 directDir;
 
 uniform DirectLight directLight;
 uniform Material material;
@@ -25,22 +29,23 @@ uniform Material material;
 uniform vec3 viewPosition;
 uniform bool blinn;
 
-vec3 CalcDirectLight(DirectLight light, vec3 normal, vec3 viewDir);
+vec3 CalcDirectLight(vec3 directDir, DirectLight light, vec3 normal, vec3 viewDir);
 
 void main()
 {
-    vec3 normal = normalize(Normal);
-    vec3 viewDir = normalize(viewPosition - FragPos);
-    vec3 result = CalcDirectLight(directLight, normal, viewDir);
+    if(vec4(texture(material.texture_diffuse1, TexCoords)).a < 0.2)
+            discard;
 
-    if(vec4(texture(material.texture_diffuse1, TexCoords)).a < 0.4)
-        discard;
+    vec3 normal = texture(material.texture_normal1, TexCoords).rgb;
+    normal = normalize(normal * 2.0 - 1.0);
+    vec3 viewDir = normalize(TangentViewPos - TangentFragPos);
+    vec3 result = CalcDirectLight(directDir, directLight, normal, viewDir);
 
     FragColor = vec4(result, 1.0);
 }
 
-vec3 CalcDirectLight(DirectLight light, vec3 normal, vec3 viewDir){
-    vec3 lightDir = normalize(-light.direction);
+vec3 CalcDirectLight(vec3 directDir, DirectLight light, vec3 normal, vec3 viewDir){
+    vec3 lightDir = normalize(-directDir);
     float diff = max(dot(normal, lightDir), 0.0);
     vec3 reflectDir = reflect(-lightDir, normal);
     float spec = 0.0;
